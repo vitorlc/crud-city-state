@@ -5,8 +5,9 @@ const cidadeSchema = new mongoose.Schema({
     type: 'string',
     required: true
   },
-  estadoId: {
-    type: 'string',
+  estado: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Estado',
     required: true
   }
 }, {

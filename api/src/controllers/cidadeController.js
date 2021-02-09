@@ -1,9 +1,10 @@
 const Cidade = require('../models/cidade')
+const Estado = require('../models/estado')
 
 module.exports = {
   async find(req, res) {
     try {
-      const cidade = await Cidade.findOne({ _id: req.params.id })
+      const cidade = await Cidade.findOne({ _id: req.params.id }).populate({ path: 'estado', model: Estado }) 
       return res.status(200).send(cidade)
     } catch (e) {
       console.log(e)
@@ -12,7 +13,7 @@ module.exports = {
   },
   async findAll(req, res) {
     try {
-      const cidades = await Cidade.find()
+      const cidades = await Cidade.find().populate({ path: 'estado', model: Estado })
       return res.status(200).send(cidades)
     } catch (e) {
       console.log(e)
@@ -22,7 +23,7 @@ module.exports = {
   async create(req, res) {
     const cidade = new Cidade({
       nome: req.body.nome,
-      estadoId: req.body.estadoId
+      estado: req.body.estadoId
     })
     try {
       const saved = await cidade.save()
