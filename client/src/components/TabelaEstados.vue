@@ -35,6 +35,7 @@ export default {
   props: {
     tableData: Array,
   },
+  inject: ["carregarEstados"],
   data() {
     return {
       search: "",
@@ -47,6 +48,7 @@ export default {
     async handleDelete(index, row) {
       try {
         await estadoService.remove(row._id);
+        this.carregarEstados();
       } catch (e) {
         console.log(e);
       }

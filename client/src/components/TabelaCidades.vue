@@ -35,6 +35,7 @@ export default {
   props: {
     tableData: Array,
   },
+  inject: ["carregarCidades"],
   data() {
     return {
       search: "",
@@ -47,6 +48,7 @@ export default {
     async handleDelete(index, row) {
       try {
         await cidadeService.remove(row._id);
+        this.carregarCidades();
       } catch (e) {
         console.log(e);
       }
