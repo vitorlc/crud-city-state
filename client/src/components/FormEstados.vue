@@ -1,29 +1,37 @@
 <template>
-  <el-form :inline="true" :model="formInline" class="demo-form-inline">
+  <el-form :inline="true" :model="formEstado" class="demo-form-inline">
     <el-form-item label="Nome">
-      <el-input v-model="formInline.user"></el-input>
+      <el-input v-model="formEstado.nome"></el-input>
     </el-form-item>
     <el-form-item label="Abreviação">
-      <el-input v-model="formInline.user" placeholder="Ex: GO"></el-input>
+      <el-input v-model="formEstado.abreviacao" placeholder="Ex: GO"></el-input>
     </el-form-item>
     <el-form-item>
-      <el-button type="primary" @click="onSubmit">Adicionar</el-button>
+      <el-button type="primary" @click="addEstado">Adicionar</el-button>
     </el-form-item>
   </el-form>
 </template>
 <script>
+import estadoService from "../services/estadoService";
 export default {
+  inject: ["carregarEstados"],
   data() {
     return {
-      formInline: {
-        user: "",
-        region: "",
+      formEstado: {
+        nome: "",
+        abreviacao: "",
       },
     };
   },
   methods: {
-    onSubmit() {
-      console.log("submit!");
+    async addEstado() {
+      try {
+        await estadoService.create(this.formEstado);
+        this.carregarEstados();
+        this.formEstado = {};
+      } catch (e) {
+        console.log(e);
+      }
     },
   },
 };
