@@ -1,19 +1,42 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <el-container
+      style="height: 98vh; border: 1px solid #eee"
+      direction="vertical"
+    >
+      <Header></Header>
+      <el-main>
+        <el-row :gutter="20">
+          <el-col :span="12">
+            <form-estados></form-estados>
+            <tabela-estados></tabela-estados>
+          </el-col>
+          <el-col :span="12">
+            <form-cidades></form-cidades>
+            <tabela-cidades></tabela-cidades>
+          </el-col>
+        </el-row>
+      </el-main>
+    </el-container>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import Header from "./components/Header";
+import TabelaEstados from "./components/TabelaEstados";
+import TabelaCidades from "./components/TabelaCidades";
+import FormEstados from "./components/FormEstados";
+import FormCidades from "./components/FormCidades";
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    HelloWorld
-  }
-}
+    Header,
+    TabelaEstados,
+    TabelaCidades,
+    FormEstados,
+    FormCidades,
+  },
+};
 </script>
 
 <style>
@@ -23,6 +46,5 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
 </style>
