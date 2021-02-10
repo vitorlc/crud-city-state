@@ -49,6 +49,14 @@ export default {
       try {
         await cidadeService.remove(row._id);
         this.carregarCidades();
+        this.$swal.fire({
+          toast: true,
+          position: 'top-end',
+          icon: 'success',
+          title: 'Cidade Removida',
+          showConfirmButton: false,
+          timer: 1500
+        })
       } catch (e) {
         console.log(e);
       }

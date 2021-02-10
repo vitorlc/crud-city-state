@@ -42,6 +42,14 @@ export default {
         await cidadeService.create(this.formCidade);
         this.carregarCidades();
         this.formCidade = {};
+        this.$swal.fire({
+          toast: true,
+          position: 'top-end',
+          icon: 'success',
+          title: 'Cidade Adicionada',
+          showConfirmButton: false,
+          timer: 1500
+        })
       } catch (e) {
         console.log(e);
       }

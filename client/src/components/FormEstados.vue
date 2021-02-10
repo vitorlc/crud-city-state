@@ -29,6 +29,14 @@ export default {
         await estadoService.create(this.formEstado);
         this.carregarEstados();
         this.formEstado = {};
+        this.$swal.fire({
+          toast: true,
+          position: 'top-end',
+          icon: 'success',
+          title: 'Estado adicionado',
+          showConfirmButton: false,
+          timer: 1500
+        })
       } catch (e) {
         console.log(e);
       }

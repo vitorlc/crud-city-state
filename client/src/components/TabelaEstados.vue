@@ -49,6 +49,14 @@ export default {
       try {
         await estadoService.remove(row._id);
         this.carregarEstados();
+        this.$swal.fire({
+          toast: true,
+          position: 'top-end',
+          icon: 'success',
+          title: 'Estado Removido',
+          showConfirmButton: false,
+          timer: 1500
+        })
       } catch (e) {
         console.log(e);
       }
