@@ -1,9 +1,9 @@
 <template>
-  <el-form :inline="true" :model="formCidade" class="demo-form-inline">
-    <el-form-item label="Nome">
+  <el-form :inline="true" :rules="rules" ref="formCidade" :model="formCidade" class="demo-form-inline">
+    <el-form-item label="Nome" prop="nome">
       <el-input v-model="formCidade.nome"></el-input>
     </el-form-item>
-    <el-form-item label="Estado">
+    <el-form-item label="Estado" prop="estadoId">
       <el-select
         v-model="formCidade.estadoId"
         placeholder="Selecione um estado"
@@ -37,7 +37,15 @@ export default {
         nome: "",
         estadoId: "",
       },
-      edicao: false
+      edicao: false,
+      rules: {
+          nome: [
+            { required: true, message: 'Por favor, digite um nome', trigger: 'blur' },
+          ],
+          estadoId: [
+            { required: true, message: 'Por favor, selecione um estado', trigger: 'blur' }
+          ]
+        }
     };
   },
   watch: {
@@ -50,6 +58,7 @@ export default {
   methods: {
     async addCidade() {
       try {
+        await this.$refs['formCidade'].validate()
         await cidadeService.create(this.formCidade);
         this.carregarCidades();
         this.formCidade = {};
@@ -68,6 +77,7 @@ export default {
     },
     async editarCidade() {
       try {
+        await this.$refs['formCidade'].validate()
         await cidadeService.update(this.formCidade._id, this.formCidade);
         this.carregarCidades();
         this.formCidade = {};
