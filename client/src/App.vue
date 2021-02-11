@@ -8,12 +8,22 @@
       <el-main>
         <el-row :gutter="20">
           <el-col :span="12">
-            <form-estados :estadoSelecionado="estadoSelecionado"></form-estados>
-            <tabela-estados :tableData="estadosData"></tabela-estados>
+            <el-card class="box-card">
+              <div slot="header" class="clearfix">
+                <h1>Estados</h1>
+              </div>
+              <form-estados :estadoSelecionado="estadoSelecionado"></form-estados>
+              <tabela-estados :tableData="estadosData"></tabela-estados>
+            </el-card>
           </el-col>
           <el-col :span="12">
+            <el-card class="box-card">
+              <div slot="header" class="clearfix">
+                <h1>Cidades</h1>
+              </div>
             <form-cidades :estados="estadosData" :cidadeSelecionada="cidadeSelecionada"></form-cidades>
             <tabela-cidades :tableData="cidadesData"></tabela-cidades>
+          </el-card>
           </el-col>
         </el-row>
       </el-main>
