@@ -31,7 +31,7 @@ export default {
   props: {
     tableData: Array,
   },
-  inject: ["carregarEstados"],
+  inject: ["carregarEstados", "editarEstado"],
   data() {
     return {
       search: "",
@@ -49,7 +49,7 @@ export default {
   },
   methods: {
     handleEdit(index, row) {
-      console.log(index, row);
+      this.editarEstado(row)
     },
     async handleDelete(index, row) {
       try {

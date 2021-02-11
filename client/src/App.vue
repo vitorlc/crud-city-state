@@ -8,11 +8,11 @@
       <el-main>
         <el-row :gutter="20">
           <el-col :span="12">
-            <form-estados></form-estados>
+            <form-estados :estadoSelecionado="estadoSelecionado"></form-estados>
             <tabela-estados :tableData="estadosData"></tabela-estados>
           </el-col>
           <el-col :span="12">
-            <form-cidades :estados="estadosData"></form-cidades>
+            <form-cidades :estados="estadosData" :cidadeSelecionada="cidadeSelecionada"></form-cidades>
             <tabela-cidades :tableData="cidadesData"></tabela-cidades>
           </el-col>
         </el-row>
@@ -48,6 +48,8 @@ export default {
     return {
       estadosData: [],
       cidadesData: [],
+      cidadeSelecionada: null,
+      estadoSelecionado: null
     };
   },
   methods: {
@@ -59,11 +61,19 @@ export default {
       const { data } = await cidadeService.findAll();
       this.cidadesData = [...data];
     },
+    async editarCidade(cidade) {
+      this.cidadeSelecionada = cidade
+    },
+    async editarEstado(estado) {
+      this.estadoSelecionado = estado
+    },
   },
   provide: function () {
     return {
       carregarEstados: this.carregarEstados,
       carregarCidades: this.carregarCidades,
+      editarCidade: this.editarCidade,
+      editarEstado: this.editarEstado
     };
   },
 };

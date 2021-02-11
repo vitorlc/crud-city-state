@@ -17,7 +17,8 @@
       </el-select>
     </el-form-item>
     <el-form-item>
-      <el-button type="primary" @click="addCidade">Adicionar</el-button>
+      <el-button v-if="edicao" type="primary" @click="editarCidade">Editar</el-button>
+      <el-button v-else type="primary" @click="addCidade">Adicionar</el-button>
     </el-form-item>
   </el-form>
 </template>
@@ -27,14 +28,24 @@ export default {
   inject: ["carregarCidades"],
   props: {
     estados: Array,
+    cidadeSelecionada: Object,
   },
   data() {
     return {
       formCidade: {
+        _id: null,
         nome: "",
         estadoId: "",
       },
+      edicao: false
     };
+  },
+  watch: {
+    cidadeSelecionada: function(cidade){
+      this.formCidade = {...cidade}
+      this.formCidade.estadoId = cidade.estado._id
+      this.edicao = true
+    }
   },
   methods: {
     async addCidade() {
@@ -42,6 +53,7 @@ export default {
         await cidadeService.create(this.formCidade);
         this.carregarCidades();
         this.formCidade = {};
+        this.edicao = false
         this.$swal.fire({
           toast: true,
           position: 'top-end',
@@ -54,6 +66,24 @@ export default {
         console.log(e);
       }
     },
+    async editarCidade() {
+      try {
+        await cidadeService.update(this.formCidade._id, this.formCidade);
+        this.carregarCidades();
+        this.formCidade = {};
+        this.edicao = false
+        this.$swal.fire({
+          toast: true,
+          position: 'top-end',
+          icon: 'success',
+          title: 'Cidade Editada',
+          showConfirmButton: false,
+          timer: 1500
+        })
+      } catch (e) {
+        console.log(e);
+      }
+    }
   },
 };
 </script>
