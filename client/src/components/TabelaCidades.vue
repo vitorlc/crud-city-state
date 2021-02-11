@@ -1,28 +1,24 @@
 <template>
   <el-table
-    :data="
-      tableData.filter(
-        (data) =>
-          !search || data.name.toLowerCase().includes(search.toLowerCase())
-      )
-    "
+    :data="tableDataFiltered"
     style="width: 100%"
   >
-    <el-table-column label="Nome" prop="nome"> </el-table-column>
-    <el-table-column label="Estado" prop="estado.abreviacao"> </el-table-column>
+    <el-table-column sortable label="Nome" prop="nome"> </el-table-column>
+    <el-table-column sortable label="Estado" prop="estado.abreviacao"> </el-table-column>
     <el-table-column align="right">
-      <template slot="header">
-        <el-input v-model="search" size="mini" placeholder="Type to search" />
+      <!-- eslint-disable-next-line -->
+      <template slot="header" slot-scope="scope">
+        <el-input v-model="search" size="mini" placeholder="Pesquise por uma cidade"></el-input>
       </template>
       <template slot-scope="scope">
         <el-button size="mini" @click="handleEdit(scope.$index, scope.row)"
-          >Edit</el-button
+          >Editar</el-button
         >
         <el-button
           size="mini"
           type="danger"
           @click="handleDelete(scope.$index, scope.row)"
-          >Delete</el-button
+          >Deletar</el-button
         >
       </template>
     </el-table-column>
@@ -40,6 +36,16 @@ export default {
     return {
       search: "",
     };
+  },
+  computed: {
+    tableDataFiltered() {
+      return this.tableData.filter(
+        (data) =>
+          !this.search || 
+          data.nome.toLowerCase().includes(this.search.toLowerCase()) ||
+          data.estado.abreviacao.toLowerCase().includes(this.search.toLowerCase())
+      )
+    }
   },
   methods: {
     handleEdit(index, row) {
